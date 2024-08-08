@@ -1,16 +1,18 @@
 import { Sequelize } from 'sequelize';
 import { DB_NAME } from "../constants.js";
 import { UserModel } from '../models/user.model.js';
+import { BlogModel } from '../models/blogPost.model.js';
 
 let User=null;
 let Blog=null;
+
 const pgDbconnection=async()=>{
 
     const sequelize = new Sequelize(DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
     host: process.env.DB_HOST,
     dialect:process.env.DB_USER
   });
-  //let User=null;
+  
   try { 
     
      //to check db connection

@@ -19,7 +19,11 @@ app.use(cookieParser())
 
 //route imports
 import userRoute from './routes/user.route.js'
+import fitBlogs from './routes/blog.route.js'
+
 //Decleration of Route
 app.use("/api/v1/users",userRoute)
+app.use("/api/v1/fitblogs",fitBlogs)
+
 
 export{ app }
