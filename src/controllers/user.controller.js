@@ -3,11 +3,10 @@ import { User } from "../db/dbConnection.js";
 import { encryptPassword, isPasswordCorrect,generateToken } from "../utils/encrypt.js";
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { ApiError } from "../utils/ApiError.js"
-import { or } from "sequelize";
 
 
 
-const registerUser=asyncHandler(async(req,res)=>{
+const registerUser=asyncHandler(async(req,res,next)=>{
 
     const {username,email,password}=req.body;
     
@@ -61,7 +60,10 @@ const registerUser=asyncHandler(async(req,res)=>{
 
 })
 
-   const loginUser=asyncHandler(async(req,res)=>{
+
+
+
+const loginUser=asyncHandler(async(req,res)=>{
 
     /*
 
@@ -88,7 +90,8 @@ const registerUser=asyncHandler(async(req,res)=>{
 
     if(!userExist)
         {
-            throw new ApiError(400,"User does not Exist")
+            const error= new ApiError(400,"User does not Exist");
+            next(error);
         }
     
         
@@ -96,7 +99,9 @@ const registerUser=asyncHandler(async(req,res)=>{
 
     if(!isPasswordValid)
         {
-            throw new ApiError(400,"Username or password is wrong")
+           // throw new ApiError(400,"Username or password is wrong")
+           const error= new ApiError(400,"Username or password is wrong");
+           next(error);
         }
 
     const userDetails={
@@ -129,11 +134,11 @@ const registerUser=asyncHandler(async(req,res)=>{
             "User login successfully"
         )
     )
-   })
+})
 
 
  
-   const logoutUser=asyncHandler(async(req,res)=>{
+const logoutUser=asyncHandler(async(req,res)=>{
 
     const options={
         httpOnly:true,
@@ -152,7 +157,7 @@ const registerUser=asyncHandler(async(req,res)=>{
             "User logout successfully"
         )
     )
-   })
+})
 
 
 
